@@ -11,33 +11,30 @@
 
 ## 硬件
 
-CPU：英特尔 i5 8400
+CPU：英特尔 i7 8700t es
 
 主板：华擎 Z370M Pro4
 
-显卡：蓝宝石 RX560 4G D5 白金版 OC (75W)
+显卡：蓝宝石 RX550 4G D5 白金版 OC (需仿冒显卡id为FF67  https://www.bilibili.com/read/cv15800495)
 
-Wi-Fi 和蓝牙：BCM943602CS
+Wi-Fi 和蓝牙：无
 
-内存：英睿达 8G DDR4 2666 x 4
+内存：英睿达 32G DDR4 2666 x 2
 
-固态硬盘 0：英特尔 760P 512G（macOS 个人用）
-
-固态硬盘 1：Samsung 970 EVO Plus 250G（macOS 工作用）
+固态硬盘 1：Samsung 970 EVO Plus 256G（macOS 工作用）
 
 机械硬盘 0：希捷 4TB（Time Machine 和文件存储）
 
 显示器 0：戴尔 U2718QM
 
-显示器 1：戴尔 U2414H
+显示器 1：戴尔 U2718QM
 
-Wi-Fi 和蓝牙芯片在 macOS 下插上就能用，不需要任何配置。
+
 
 ## 正常的功能
 
 - [x] 系统睡眠与唤醒
 - [x] 多显示器支持
-- [x] 蓝牙、Wi-Fi 和有线网络
 - [x] iMessage、Handoff、Continuity、FaceTime 和 AirDrop
 - [x] 音频输入和输出
 - [x] Headless 模式下的 Intel iGPU
@@ -64,7 +61,7 @@ Advanced \ Chipset Configuration → IGPU Multi-Monitor : Enabled
 
 ### CPU
 
-[SSDT-PLUG.dsl](https://github.com/acidanthera/OpenCorePkg/blob/master/Docs/AcpiSamples/SSDT-PLUG.dsl) 需要手动设置 CPU ID 后编译成 aml 文件后才能正常工作，如果没有设置正确会出现电源选项里面看不到 Powernap 选项和待机状态下 CPU 频率出现大幅波动的问题。以我的配置举例，scope 是 `_PR`，CPU ID 是 `PR00`，所以我的 SSDT-PLUG 应该是这样的 - [SSDT-PLUG.dsl](OC/ACPI/SSDT-PLUG.dsl)。详细的文档请参考 - [Fixing Power Management: Manual](https://dortania.github.io/Getting-Started-With-ACPI/Universal/plug-methods/manual.html)。
+显卡需要仿冒，详情参加：https://www.bilibili.com/read/cv15800495/
 
 ### FileVault
 
@@ -93,11 +90,10 @@ DevicePath = PciRoot(0x0)/Pci(0x1f,0x3)
 
 [SSDT-EC-USBX.dsl](https://github.com/acidanthera/OpenCorePkg/blob/master/Docs/AcpiSamples/SSDT-EC-USBX.dsl) 也需要正确的设置。以我的配置举例，scope 是 `_SB.PCI0.LPCB`，device 是 `H_EC`，所以我的 SSDT-PLUG 应该是这样的 - [SSDT-EC-USBX.dsl](SSDT-EC-USBX.dsl)。详细的文档请参考 - [Fixing Embedded Controllers: Manual](https://dortania.github.io/Getting-Started-With-ACPI/Universal/ec-methods/manual.html)。
 
-USB 补丁制作请参考 - [The New Beginner's Guide to USB Port Configuration](https://www.tonymacx86.com/threads/the-new-beginners-guide-to-usb-port-configuration.286553/)。
-
+USB 补丁制作请参考 - (https://www.bilibili.com/video/BV1dg4y1g7Ww/?spm_id_from=333.337.search-card.all.click&vd_source=63ff8e7e7ea23d803aad65ddd4ca6822)
 ### 集成显卡
 
-按照这里的配置方法 - [Coffee Lake / DeviceProperties](https://github.com/dortania/OpenCore-Install-Guide/blob/master/config.plist/coffee-lake.md#deviceproperties)。
+8700t es无法驱动集成显卡
 
 ### 数据备份
 
@@ -119,50 +115,9 @@ HSXX 代表的是 USB 2.0，SSXX 代表的是 USB 3.0。
 
 ![port mapping](./images/motherboard-usb-mapping.png)
 
-蓝牙：HS05
+
 
 机箱前置 USB（上）：HS09 SS06
 
 机箱前置 USB（下）：HS10 SS05
 
-## 升级记录
-
-| 版本 | 日期 | 备注 | OpenCore 版本 |
-|-------------------------------|-----------|----------|----------|
-| macOS Mojave 10.14.2 (18C54)  | 2018.12.7 | 正常升级，无异常 | |
-| macOS Mojave 10.14.3 (18D42)  | 2019.1.23 | 正常升级，无异常 | |
-| macOS Mojave 10.14.3 (18D109) | 2019.2.11 | 正常升级，无异常 | |
-| macOS Mojave 10.14.4 (18E226) | 2019.3.26 | 正常升级，无异常 | |
-| macOS Mojave 10.14.5 (18F132) | 2019.5.16 | 正常升级，无异常 | |
-| macOS Mojave 10.14.6 (18G84)  | 2019.7.23 | 正常升级，无异常 | |
-| macOS Mojave 10.14.6 (18G87)  | 2019.8.6  | 正常升级，无异常 | |
-| macOS Mojave 10.14.6 (18G95)  | 2019.8.31 | 正常升级，无异常 | |
-| macOS Mojave 10.14.6 (18G103) | 2019.9.27 | 正常升级，无异常 | |
-| macOS Catalina 10.15 (19A583) | 2019.10.14 | 正常升级，无异常 | |
-| macOS Catalina 10.15 (19A602) | 2019.10.18 | 正常升级，无异常 | |
-| macOS Catalina 10.15.1 (19B88) | 2019.11.1 | 正常升级，无异常 | |
-| macOS Catalina 10.15.2 (19C57) | 2019.12.15| 正常升级，无异常 | |
-| macOS Catalina 10.15.4 (19E287) | 2020.4.9| 正常升级，无异常 | |
-| macOS Catalina 10.15.5 (19F96) | 2020.5.30| 正常升级，无异常 | |
-| macOS Catalina 10.15.6 (19G73) | 2020.8.4| 正常升级，无异常 | |
-| macOS Catalina 10.15.6 (19G2021) | 2020.8.13| 正常升级，无异常 | |
-| macOS Catalina 10.15.7 (19H15) | 2020.11.8| 正常升级，无异常 | |
-| macOS Big Sur 11.0.1 (20B29) | 2020.12.8| 正常升级，无异常 | 0.6.4 |
-
-## 跑分测试
-
-### Geekbench CPU
-
-<img src="./images/geekbench-cpu.png" alt="geekbench-cpu-score" width="400px">
-
-### Geekbench GPU
-
-<img src="./images/geekbench-gpu-opengl.png" alt="geekbench-gpu-opengl-score" width="400px">
-
-### Cinebench
-
-<img src="./images/cinebench.png" alt="cinebench-score">
-
-## 一些有用的链接
-
-1. [Dortania's OpenCore Install Guide](https://dortania.github.io/OpenCore-Install-Guide/)
